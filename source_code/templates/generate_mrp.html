@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MRP Sticker Generator</title>
+    <!-- Google Fonts link for Montserrat Bold -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif; /* Set Montserrat as the default font */
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(-45deg, #add8e6, #9370db, #ffb6c1, #ffa500); /* light blue, purple, light pink, orange */
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+
+        h1, label, p, input, select, button {
+            font-family: 'Montserrat', sans-serif; /* Apply Montserrat Bold to elements */
+            font-weight: 700; /* Ensure the font is bold */
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        label {
+            font-size: 14px;
+            color: #555;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input, select {
+            width: 100%;
+            max-width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+            background-color: #f9f9f9;
+            box-sizing: border-box;
+        }
+
+        input:focus, select:focus {
+            border-color: #007bff;
+            background-color: #fff;
+            outline: none;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .note {
+            font-size: 12px;
+            color: #777;
+            text-align: center;
+        }
+
+        footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 14px;
+            color: #777;
+        }
+
+        #label-dimensions {
+            font-size: 14px;
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    </style>
+    <script>
+        function updateContent() {
+            const unitDropdown = document.getElementById('units');
+            const selectedUnit = unitDropdown.value;
+            document.getElementById('content').value = selectedUnit === '1' ? '1 UNIT' : `${selectedUnit} UNITS`;
+            updateDimensions();
+        }
+
+        function updateDimensions() {
+            const category = document.getElementById('catogary').value;
+            const contentValue = document.getElementById('content').value;
+            const unitCount = parseInt(contentValue.split(' ')[0]);
+
+            let width, height;
+
+            if (category === 'Ceiling fan' && unitCount === 1) {
+                width = 100;
+                height = 75;
+            } else if (category === 'Ceiling fan' && unitCount > 1) {
+                width = 100;
+                height = 150;
+            } else if (category === 'Stand fan' && unitCount === 1) {
+                width = 100;
+                height = 75;
+            } else if (category === 'Stand fan' && unitCount > 1) {
+                width = 100;
+                height = 150;
+            } else if (category === 'Wall fan' && unitCount === 1) {
+                width = 100;
+                height = 75;
+            } else if (category === 'Wall fan' && unitCount > 1) {
+                width = 100;
+                height = 150;
+            } else if (category === 'Table fan' && unitCount === 1) {
+                width = 100;
+                height = 75;
+            } else if (category === 'Table fan' && unitCount > 1) {
+                width = 100;
+                height = 150;
+            } else if (category === 'Immersion Heater' && unitCount === 1) {
+                width = 50;
+                height = 50;
+            } else if (category === 'Immersion Heater' && unitCount > 1) {
+                width = 100;
+                height = 150;
+            } else if (unitCount > 1) {
+                width = 100;
+                height = 150;
+            } else {
+                width = 100;
+                height = 75;
+            }
+
+            document.getElementById('label-dimensions').innerText = `Label Dimensions: ${width}mm width x ${height}mm height`;
+        }
+
+        window.onload = function() {
+            updateDimensions();
+        }
+    </script>
+</head>
+<body>
+
+    <div class="container">
+        <h1>MRP Sticker Generator</h1>
+        <form action="/generate_pdf" method="POST">
+            <div class="form-group">
+                <label for="catogary">Category:</label>
+                <select id="catogary" name="catogary" required onchange="updateDimensions()">
+                    <option value="Ceiling fan">Ceiling Fan</option>
+                    <option value="Wall fan">Wall Fan</option>
+                    <option value="Table fan">Table Fan</option>
+                    <option value="Stand fan" selected>Stand Fan</option>
+                    <option value="Exhaust Fans">Exhaust Fan</option>
+                    <option value="IND EX Fan">IND EX Fan</option>
+                    <option value="Axial Fan">Axial Fan</option>
+                    <option value="Ventilation Fan">Ventilation Fan</option>
+                    <option value="Coil Stove">Coil Stove</option>
+                    <option value="Room Heater">Room Heater</option>
+                    <option value="LPG Stove">LPG Stove</option>
+                    <option value="Immersion Heater">Immersion Heater</option>
+                    <option value="Stabilizer">Stabilizer</option>
+                    <option value="SS Casserole">SS Casserole</option>
+                    <option value="Electric Iron">Electric Iron</option>
+                    <option value="Steam Iron">Steam Iron</option>
+                    <option value="Mixer Grinde">Mixer Grinder</option>
+                    <option value="Hand Blender">Hand Blender</option>
+                    <option value="Wet Grinder">Wet Grinder</option>
+                    <option value="Electric Geyser">Electric Geyser</option>
+                    <option value="Triply Cooker">Triply Cooker</option>
+                    <option value="Pressure Cooker">Pressure Cooker</option>
+                    <option value="Easy Cook">Easy Cook</option>
+                    <option value="Non Stick">Non Stick</option>
+                    <option value="Wire">Wire</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="model">Model:</label>
+                <input type="text" id="model" name="model" value="Windy" required>
+            </div>
+
+            <div class="form-group">
+                <label for="content">Content:</label>
+                <input type="text" id="content" name="content" value="1" oninput="updateDimensions()">
+            </div>
+
+            <div class="form-group">
+                <label for="mrp">MRP:</label>
+                <input type="text" id="mrp" name="mrp" value="3,780" required>
+            </div>
+
+            <div class="form-group">
+                <label for="mfd">Manufacture Date (MFD):</label>
+                <input type="text" id="mfd" name="mfd" value="SEPTEMBER 2024" required>
+            </div>
+
+            <div class="form-group">
+                <label for="mfd_at">Manufactured at:</label>
+                <select id="mfd_at" name="mfd_at" required>
+                    <option value="88/C IDA Jeedimetla Phase III Hyderabad - 500055">Rally International - Hyderabad</option>
+                    <option value="Entire Ground And st Floor, A-26M, Gali No.4, Industrial Area, Anand Parbat, New Delhi - 110005">SunStar Home Appliances - New Delhi</option>
+                    <option value="#43, 44 Byraveshwara Industrial Estate, Hegganhalli, Near Peenya 2nd Stage, Bangalore - 560091">Hema Industries - Bangalore</option>
+                    <option value="L-98 SECTOR -1 DSIIDC Bawana, Industrial Area New Delhi-110039">Alert Appliances (India) - New Delhi</option>
+                    <option value="E-56 SECTOR - 4, DSIIDC Industrial Area Delhi-110039">Navkar Industries - New Delhi</option>
+                </select>
+            </div>
+
+            <p id="label-dimensions">Label Dimensions: 100mm width x 75mm height</p>
+
+            <button type="submit">Generate PDF</button>
+            <p class="note">All fields are required. Please ensure the details are correct before submitting.</p>
+        </form>
+        <footer>
+            Designed by Abhijeet with Sociopathic Humor!
+        </footer>
+    </div>
+
+</body>
+</html>
