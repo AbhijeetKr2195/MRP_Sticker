@@ -34,3 +34,6 @@ Developed a web application for generating Maximum Retail Price (MRP) stickers t
 The development of the MRP sticker web application not only improved our inventory management processes but also provided significant operational benefits to the organization. This project enhanced my skills in web development and reinforced my understanding of creating user-centered applications. I look forward to applying what I’ve learned to future projects.
 
 ## For Demo, Please Check This: [Link](https://abhijeetkumarthakur2198.pythonanywhere.com/generate_mrp)
+
+## License
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
